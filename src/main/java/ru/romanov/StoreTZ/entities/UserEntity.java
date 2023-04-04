@@ -34,6 +34,8 @@ public class UserEntity {
     private BigDecimal balance;
     @Column(name = "password")
     private String password;
+    @Column(name = "role")
+    private String role;
     @ManyToMany
     @JoinTable(name = "basket",
             joinColumns = @JoinColumn(name = "user_id"),

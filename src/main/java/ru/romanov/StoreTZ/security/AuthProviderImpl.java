@@ -27,20 +27,17 @@ public class AuthProviderImpl implements AuthenticationProvider {
         String userName = authentication.getName();
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(userName);
-        //Получаем пришедший пароль
         String password = authentication.getCredentials().toString();
 
-        //Сравниваем с тем что в БД
+
         if (!password.equals(userDetails.getPassword()))
-            //Если не совпал - исключение
             throw new BadCredentialsException("Incorrect password!");
-        //Пустой лист потому что там должна быть информация о правах пользователя
-        //У нас ее пока нет
+
         return new UsernamePasswordAuthenticationToken(userDetails, password,
                 Collections.emptyList());
     }
 
-    //Для какого объекта этобудет работать
+
     @Override
     public boolean supports(Class<?> authentication) {
         return true;

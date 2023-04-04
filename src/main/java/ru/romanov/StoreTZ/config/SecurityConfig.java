@@ -18,28 +18,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public SecurityConfig(UserEntityDetailsService userEntityDetailsService) {
         this.userEntityDetailsService = userEntityDetailsService;
     }
+
     @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        //Конфигурируем SpringSec
-        //Конфигурируем авторизацию
-        http.csrf().disable()                   //Отключаем защиту от ежсайтовой подделке запросов
-                .authorizeRequests()
+    protected void configure(HttpSecurity http) throws Exception {
+
+        http.authorizeRequests()
+                .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest().hasAnyRole("USER","ADMIN")
                 .and()
                 .formLogin().loginPage("/auth/login")
                 .loginProcessingUrl("/process_login")
                 .defaultSuccessUrl("/hello", true)
                 .failureUrl("/auth/login?error")
                 .and()
-                .logout().logoutUrl("logout").logoutSuccessUrl("/auth/login");
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/auth/login");
     }
 
-    //Метод настраивает логику аутентификации
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userEntityDetailsService).
-        passwordEncoder(getPasswordEncoder());
+                passwordEncoder(getPasswordEncoder());
     }
 
     @Bean

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.romanov.StoreTZ.entities.UserEntity;
 import ru.romanov.StoreTZ.repositories.UserRepository;
+import ru.romanov.StoreTZ.util.Role;
+
 @Service
 public class RegistrationService {
     private final UserRepository userRepository;
@@ -18,6 +20,7 @@ public class RegistrationService {
     @Transactional
     public void register(UserEntity user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(Role.ROLE_USER.getRole());
         userRepository.save(user);
     }
 }

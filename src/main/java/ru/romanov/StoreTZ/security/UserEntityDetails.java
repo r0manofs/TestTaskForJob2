@@ -1,10 +1,12 @@
 package ru.romanov.StoreTZ.security;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.romanov.StoreTZ.entities.UserEntity;
 
 import java.util.Collection;
+import java.util.Collections;
 
 public class UserEntityDetails implements UserDetails {
 
@@ -17,7 +19,8 @@ public class UserEntityDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole()));
     }
 
     @Override
@@ -49,8 +52,7 @@ public class UserEntityDetails implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    //Нужно чтобы получать данные аутентифицированного
-    //Пользователя
+
     public UserEntity getUser(){
         return this.user;
     }

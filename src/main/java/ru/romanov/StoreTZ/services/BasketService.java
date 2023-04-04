@@ -36,7 +36,7 @@ public class BasketService {
     @Size(min = 2, max = 100, message = " Name should be between 2 and 100 characters")
     String findUsersByUserName(UserEntity user) {
         return user.getUserName();
-        //TODO Не знаю че это за хуета, но надо разобраться как из баскета найти человеков
+        //TODO надо разобраться как из баскета найти человеков
     }
 
     private void enrichBasket(BasketEntity basket) {

@@ -19,17 +19,14 @@ public class UserEntityDetailsService implements UserDetailsService {
     public UserEntityDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-    //Вот как раз тот метод который будет
-    //Загружать по имени пользователя
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //Оборачиваем в optional потому что он может быть а может и нет
         Optional<UserEntity> user = userRepository.findByUserName(username);
-        //Если пользователь не пришел выбрасываем исключение
+
         if (user.isEmpty())
             throw new UsernameNotFoundException("User not found!");
-        //Если таки пришел то получаем
-        //И оборачиваем в Details
+
         return new UserEntityDetails(user.get());
     }
 }

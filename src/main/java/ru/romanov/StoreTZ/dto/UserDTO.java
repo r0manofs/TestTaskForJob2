@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -21,6 +20,7 @@ public class UserDTO {
     @Size(min = 2, max = 100, message = "Email should be between 2 and 100 characters")
     @Email
     private String userEmail;
-    @Column(name = "balance")
     private BigDecimal balance;
+    @NotEmpty(message = "empty role")
+    private String role;
 }
